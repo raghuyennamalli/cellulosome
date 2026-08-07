@@ -39,8 +39,7 @@ from parameters import distance_restraint_list_cellulosome
 
 #Prints the selected random number
 rng = IMP.random_number_generator()
-print(rng)
-
+print(rng)   # <class 'int'>
 '''
 #Random number can be fixed for reproducibility
 seed_str = os.environ.get("SEED")
@@ -108,9 +107,9 @@ bs = IMP.pmi.macros.BuildSystem(m)
 bs.add_state(topology)
 
 # Build the system representation and degrees of freedom
-root_hier, dof = bs.execute_macro(max_rb_trans=2.0,
-                                  max_rb_rot=0.3,
-                                  max_bead_trans=5.0,
+root_hier, dof = bs.execute_macro(max_rb_trans=2.0, # 4.0 last worked 2.0
+                                  max_rb_rot=0.3,   #0.3
+                                  max_bead_trans=5.0, #5.0
                                   max_srb_trans=4.0,
                                   max_srb_rot=0.3)
 
@@ -120,13 +119,33 @@ root_hierarchy = root_hier
 # Get copies, which are the immediate children of the root hierarchy
 copy_particles = [child for child in root_hierarchy.get_children()]
 
-# To print the entire hierarchy tree
-#def print_hierarchy(particle, level=0):
-#    print("  " * level + particle.get_name())
-#    for child in particle.get_children():
-#        print_hierarchy(child, level + 1)
+# Optional: to print the entire hierarchy tree
+def print_hierarchy(particle, level=0):
+    print("  " * level + particle.get_name())
+    for child in particle.get_children():
+        print_hierarchy(child, level + 1)
 
 #print_hierarchy(root_hierarchy)
+
+def print_fragments(particle, level=0):
+    name = particle.get_name()
+
+    indent = "  " * level
+
+    # check if particle is a fragment
+    if IMP.atom.Fragment.get_is_setup(particle):
+        frag = IMP.atom.Fragment(particle)
+        residues = frag.get_residue_indexes()
+        print(f"{indent}{name}  | residues: {list(residues)} | beads: 1")
+
+    else:
+        print(indent + name)
+
+    for child in particle.get_children():
+        print_fragments(child, level + 1)
+
+
+#print_fragments(root_hierarchy)
 
 #Selecting particles which are fitted to em map and temporarily disabling them to prevent their movement during shuffling
 print("Selecting EM regions:")
@@ -163,7 +182,8 @@ for start, end in cipa_ranges:
 
 print(f"\nTotal EM particles: {len(em_particles)}")
 
-# Connectivity restraint
+
+# Connectivity keeps things connected along the backbone (ignores if inside same rigid body)
 
 mols = IMP.pmi.tools.get_molecules(root_hier)
 for mol in mols:
@@ -181,7 +201,9 @@ temp_hier = IMP.pmi.tools.input_adaptor(
 
 fixed_em_rigid_body, fixed_em_flexible_beads =  IMP.pmi.tools.get_rbs_and_beads(temp_hier)
 
-#Shuffling and saving the shuffled frames
+
+# then restraints and continue sampling
+# Create shuffle_frames directory inside the output directory
 full_output_dir = f"{output_directory}{output_index}"
 shuffle_dir = os.path.join(full_output_dir, "shuffle_frames")
 os.makedirs(shuffle_dir, exist_ok=True)
@@ -191,10 +213,10 @@ file_name_0 = f"initial_{output_directory}{output_index}.rmf3"
 file_path_0 = os.path.join(shuffle_dir, file_name_0)
 
 # Create and write the RMF file
-fname_0 = RMF.create_rmf_file(file_path_0)
-IMP.rmf.add_hierarchy(fname_0, root_hier)
-IMP.rmf.save_frame(fname_0)
-fname_0.close()
+fname_0 = RMF.create_rmf_file(file_path_0)   # create RMF file
+IMP.rmf.add_hierarchy(fname_0, root_hier)  # add system hierarchy
+IMP.rmf.save_frame(fname_0)                # write one frame
+fname_0.close()                            # close file
 
 #mild shuffling of em fitted particles
 IMP.pmi.tools.shuffle_configuration(temp_hier,
@@ -208,17 +230,17 @@ file_name_1 = f"mild_shuffle_{output_directory}{output_index}.rmf3"
 file_path_1 = os.path.join(shuffle_dir, file_name_1)
 
 # Create and write the RMF file
-fname_1 = RMF.create_rmf_file(file_path_1)
-IMP.rmf.add_hierarchy(fname_1, root_hier)
-IMP.rmf.save_frame(fname_1)
-fname_1.close()
+fname_1 = RMF.create_rmf_file(file_path_1)   # create RMF file
+IMP.rmf.add_hierarchy(fname_1, root_hier)  # add system hierarchy
+IMP.rmf.save_frame(fname_1)                # write one frame
+fname_1.close()                            # close file
 
 #shuffling of non-em particles
 IMP.pmi.tools.shuffle_configuration(root_hier,
                                     excluded_rigid_bodies=fixed_em_rigid_body,
-                                    max_translation=40,
+                                    max_translation=40, #40 
                                     verbose=False,
-                                    cutoff=4.0,
+                                    cutoff=4.0, 
                                     niterations=500)
 dof.optimize_flexible_beads(1000)
 
@@ -236,7 +258,12 @@ fname_2.close()                            # close file
 # Define Scoring Function Components
 #-----------------------------------
 
+# Here we are defining a number of restraints on our system.
+#  For all of them we call add_to_model() so they are incorporated into scoring
+#  We also add them to the outputobjects list, so they are reported in stat files
+
 # Excluded Volume Restraint
+# To speed up this expensive restraint, we evaluate it at resolution 10
 ev = IMP.pmi.restraints.stereochemistry.ExcludedVolumeSphere(
                                          included_objects=root_hier,
                                          resolution=10)
@@ -245,9 +272,14 @@ ev.add_to_model()
 outputobjects.append(ev)
 
 print ( "Excluded volume restraint appplied")
-
-#EM restraint
-
+#  Electron Microscopy Restraint
+#  The GaussianEMRestraint uses a density overlap function to compare model to data
+#   First the EM map is approximated with a Gaussian Mixture Model (done separately)
+#   Second, the components of the model are represented with Gaussians (forming the model GMM)
+#   Other options: scale_to_target_mass ensures the total mass of model and map are identical
+#                  slope: nudge model closer to map when far away
+#                  weight: experimental, needed becaues the EM restraint is quasi-Bayesian
+# Assume you have a dict mapping EM map filenames to the list of component names assigned:
 print ("Starting EM particles selection loop...")
 
 for em_params in em_data_list_cellulosome:
@@ -275,6 +307,7 @@ for em_params in em_data_list_cellulosome:
         else:
             density_particles |= selection
 
+    #MUST be inside this loop
     em_restraint = IMP.pmi.restraints.em.GaussianEMRestraint(
         densities=density_particles.get_selected_particles(),
         target_fn=em_params["gmm_file"],
@@ -289,7 +322,7 @@ for em_params in em_data_list_cellulosome:
 
 print ("EM restraint applied")
 
-#Distance restraint
+#Distance restraint for cohesin 6, 7 and 8
 
 print("Setting up distance restraints between cohesins 6,7 and 7,8..")
 
@@ -331,11 +364,18 @@ print ("Distance restraint applied!")
 
 if '--test' in sys.argv: num_frames=2000
 
+# This object defines all components to be sampled as well as the sampling protocol
+
 mc1=IMP.pmi.macros.ReplicaExchange(m,
                                    root_hier=root_hier,
                                    monte_carlo_sample_objects=dof.get_movers(),
                                    output_objects=outputobjects,
                                    monte_carlo_temperature=1.0,
+#                                   simulated_annealing=False,
+#                                   simulated_annealing_minimum_temperature=min(sa_temps),
+#                                   simulated_annealing_maximum_temperature=max(sa_temps),
+#                                   simulated_annealing_minimum_temperature_nframes=sa_min_temp_steps,
+#                                   simulated_annealing_maximum_temperature_nframes=sa_max_temp_steps,
                                    replica_exchange_minimum_temperature=min(rex_temps),
                                    replica_exchange_maximum_temperature=max(rex_temps),
                                    number_of_best_scoring_models=0,
