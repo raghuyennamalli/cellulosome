@@ -77,10 +77,10 @@ distance_restraint_list_cellulosome = [
     "copy2": 0,
     "residue2_start": 1132,
     "residue2_end": 1132,
-    "target_distance": 58.743,  
+    "target_distance": 58.743,  #distance found from chimerax
     "threshold": 5.0,           #upper and lower bound to be added to the target distance
-    "kappa": 0.5, 
-    "weight": 1.0, 
+    "kappa": 0.5, #1.0
+    "weight": 1.0, #1.0
     "label": "coh5_0_967_coh6_0_1132_COM_Distance"
 },
    {
@@ -93,9 +93,9 @@ distance_restraint_list_cellulosome = [
     "residue2_start": 1297,
     "residue2_end": 1297,
     "target_distance": 58.743,
-    "threshold": 5.0,           
-    "kappa": 0.5,
-    "weight": 1.0,
+    "threshold": 5.0,           #upper and lower bound to be added to the target distance
+    "kappa": 0.5, #1.0
+    "weight": 1.0, #1.0
     "label": "coh6_0_1132_coh7_0_1297_COM_Distance"
 },
     {
@@ -133,8 +133,8 @@ distance_restraint_list_cellulosome = [
     {
     "prot1": "cipa",
     "copy1": 0,
-    "residue1_start": 1,
-    "residue1_end": 1,
+    "residue1_start": 29,
+    "residue1_end": 29,
     "prot2": "cipa",
     "copy2": 0,
     "residue2_start": 1853,
