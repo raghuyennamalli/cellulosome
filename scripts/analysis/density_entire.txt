@@ -1,0 +1,1 @@
+density_custom_ranges={"cela_0":["cela.0"],"cela_1":["cela.1"], "cela_2":["cela.2"], "cela_3":["cela.3"],"cela_4":["cela.4"], "cela_5":["cela.5"], "cela_6":["cela.6"], "cela_7":["cela.7"], "cela_8":["cela.8"], "cipa_0":["cipa.0"]}
