@@ -3,7 +3,7 @@
 |fasta_dir|./fasta|
 |gmm_dir|./gmm_imp|
 
-|molecule_name   |color     |fasta_fn             |fasta_id|pdb_fn                                 |chain|residue_range|pdb_offset|bead_size|em_residues_per_gaussian|rigid_body|super_rigid_body|chain_of_super_rigid_bodies|
+|molecule_name   |color     |fasta_fn |fasta_id |pdb_fn |chain |residue_range |pdb_offset |bead_size |em_residues_per_gaussian |rigid_body |super_rigid_body |chain_of_super_rigid_bodies|
 
 |cela.0          |#FF8C00      |cellulosome.fasta.txt|cela:B  |1KWF_1.pdb                             |A    |33,395       |0|10|0 |2 | |
 |cela.0          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |0 |  | |
