@@ -1,0 +1,58 @@
+|directories|
+|pdb_dir|./pdb|
+|fasta_dir|./fasta|
+|gmm_dir|./gmm_imp|
+
+|molecule_name   |color     |fasta_fn             |fasta_id|pdb_fn                                 |chain|residue_range|pdb_offset|bead_size|em_residues_per_gaussian|rigid_body|super_rigid_body|chain_of_super_rigid_bodies|
+
+|cela.0          |#FF8C00      |cellulosome.fasta.txt|cela:B  |1KWF_1.pdb                             |A    |33,395       |0|10|0 |2 | |
+|cela.0          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |0 |  | |
+|cela.0          |#FF0000      |cellulosome.fasta.txt|cela:B  |cohesin1_dockerin.pdb                  |B    |413,477      |0|10|0 |1 | |
+|cela.1          |#FF8C00      |cellulosome.fasta.txt|cela:B  |1KWF_2.pdb                             |A    |33,395       |0|10|0 |4 | |
+|cela.1          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |0 |  | |
+|cela.1          |#FF0000      |cellulosome.fasta.txt|cela:B  |cohesin2_dockerin.pdb                  |B    |413,477      |0|10|0 |3 | |
+|cela.2          |#FF8C00      |cellulosome.fasta.txt|cela:B  |chimera_fitted_1KWF_3.pdb              |A    |33,395       |0|10|10|7 | |
+|cela.2          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |5 |  | |
+|cela.2          |#FF0000      |cellulosome.fasta.txt|cela:B  |chimera_fitted_cohesin3_dockerin.pdb   |B    |413,477      |0|10|10|6 | |
+|cela.3          |#FF8C00      |cellulosome.fasta.txt|cela:B  |chimera_fitted_1KWF_4.pdb              |A    |33,395       |0|10|10|9 | |
+|cela.3          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |5 |  | |
+|cela.3          |#FF0000      |cellulosome.fasta.txt|cela:B  |chimera_fitted_cohesin4_dockerin.pdb   |B    |413,477      |0|10|10|8 | |
+|cela.4          |#FF8C00      |cellulosome.fasta.txt|cela:B  |chimera_fitted_1KWF_5.pdb              |A    |33,395       |0|10|10|11| |
+|cela.4          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |5 |  | |
+|cela.4          |#FF0000      |cellulosome.fasta.txt|cela:B  |chimera_fitted_cohesin5_dockerin.pdb   |B    |413,477      |0|10|10|10| |
+|cela.5          |#FF8C00      |cellulosome.fasta.txt|cela:B  |1KWF_6.pdb                             |A    |33,395       |0|10|0 |13| |
+|cela.5          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |0 |  | |
+|cela.5          |#FF0000      |cellulosome.fasta.txt|cela:B  |cohesin6_dockerin.pdb                  |B    |413,477      |0|10|0 |12| |
+|cela.6          |#FF8C00      |cellulosome.fasta.txt|cela:B  |1KWF_7.pdb                             |A    |33,395       |0|10|0 |15| |
+|cela.6          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |0 |  | |
+|cela.6          |#FF0000      |cellulosome.fasta.txt|cela:B  |cohesin7_dockerin.pdb                  |B    |413,477      |0|10|0 |14| |
+|cela.7          |#FF8C00      |cellulosome.fasta.txt|cela:B  |1KWF_8.pdb                             |A    |33,395       |0|10|0 |17| |
+|cela.7          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |0 |  | |
+|cela.7          |#FF0000      |cellulosome.fasta.txt|cela:B  |cohesin8_dockerin.pdb                  |B    |413,477      |0|10|0 |16| |
+|cela.8          |#FF8C00      |cellulosome.fasta.txt|cela:B  |1KWF_9.pdb                             |A    |33,395       |0|10|0 |19| |
+|cela.8          |#32CD32      |cellulosome.fasta.txt|cela:B  |BEADS                                  |     |396,412      |0|5 |0 |  | |
+|cela.8          |#FF0000      |cellulosome.fasta.txt|cela:B  |cohesin9_dockerin.pdb                  |B    |413,477      |0|10|0 |18| |
+
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |29,29        |0|5 |0 |  | |  
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |cohesin1_dockerin.pdb                  |A    |30,169       |0|10|0 |1 | |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |170,182      |0|5 |0 |  | |
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |cohesin2_dockerin.pdb                  |A    |183,322      |0|10|0 |3 | |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |323,367      |0|5 |0 |  | |  
+|cipa.0          |#9932CC      |cellulosome.fasta.txt|cipa:A  |cbm.pdb                                |A    |368,519      |0|10|0 |5 | |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |A    |520,559      |0|5 |0 |  | |
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |chimera_fitted_cohesin3_dockerin.pdb   |A    |560,703      |0|10|10|6 | |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |704,723      |0|5 |5 |  | |
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |chimera_fitted_cohesin4_dockerin.pdb   |A    |724,866      |0|10|10|8 | |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |867,888      |0|5 |5 |  | |
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |chimera_fitted_cohesin5_dockerin.pdb   |A    |889,1031     |0|10|10|10| |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |1032,1053    |0|5 |0 |  | |
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |cohesin6_dockerin.pdb                  |A    |1054,1196    |0|10|0 |12| |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |1197,1218    |0|5 |0 |  | |
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |cohesin7_dockerin.pdb                  |A    |1219,1361    |0|10|0 |14| |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |1362,1383    |0|5 |0 |  | |
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |cohesin8_dockerin.pdb                  |A    |1384,1526    |0|10|0 |16| |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |     |1527,1547    |0|5 |0 |  | |
+|cipa.0          |#0000FF      |cellulosome.fasta.txt|cipa:A  |cohesin9_dockerin.pdb                  |A    |1548,1686    |0|10|0 |18| |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |A    |1687,1699    |0|5 |0 |  | |
+|cipa.0          |#800000      |cellulosome.fasta.txt|cipa:A  |dockerin_II_X_module.pdb               |A    |1700,1850    |0|10|0 |20| |
+|cipa.0          |#00CED1      |cellulosome.fasta.txt|cipa:A  |BEADS                                  |A    |1851,1853    |0|5 |0 |  | |
