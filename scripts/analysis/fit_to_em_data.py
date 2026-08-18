@@ -5,8 +5,8 @@ import argparse
 from mrc_parser import calculate_with_external_grid_with_addition
 
 # Paths
-SEG_DIR = '/home/ragothaman/Documents/Nisha/cellulosome/cellulosome_integrative_modeling/preprocessing/cryo_em/segmented_normalized'
-LPD_DIR = '/home/ragothaman/Documents/Nisha/cellulosome/cellulosome_integrative_modeling/analysis/run_5/sampcon_output_em_components/cluster.0'
+SEG_DIR = '/path/to/segmented_maps/segmented_normalized'
+LPD_DIR = '/path/to/cluster.0'
 parser = argparse.ArgumentParser(description="Whole Complex EM Validation")
 parser.add_argument("--output_dir", type=str, required=True, help="Path to save validation results.")
 args = parser.parse_args()
@@ -19,9 +19,13 @@ mrc_full = mrcfile.open(f'{SEG_DIR}/EMD_1823_coh_3_4_5_norm_inverted.mrc', 'r', 
 
 # 2. Define the new LPD filenames based on your list
 lpd_filenames = [
-    'LPD_Enzyme_3.mrc', 'LPD_Enzyme_4.mrc', 'LPD_Enzyme_5.mrc',
-    'LPD_Cohesin_3.mrc', 'LPD_Cohesin_4.mrc', 'LPD_Cohesin_5.mrc'
-]
+    'LPD_Cohesin_3.mrc', 'LPD_Coh_3_coh_4_linker.mrc', 
+    'LPD_Cohesin_4.mrc', 'LPD_Coh_4_coh_5_linker.mrc', 
+    'LPD_Cohesin_5.mrc', 
+    'LPD_Enzyme_3.mrc', 'LPD_Enzyme_3_linker.mrc', 'LPD_Dockerin_3.mrc', 
+    'LPD_Enzyme_4.mrc', 'LPD_Enzyme_4_linker.mrc', 'LPD_Dockerin_4.mrc', 
+    'LPD_Enzyme_5.mrc', 'LPD_Enzyme_5_linker.mrc', 'LPD_Dockerin_5.mrc'
+    ]
 
 # Helper to extract grid and values
 def get_grid_and_values(mrc):
@@ -31,7 +35,7 @@ def get_grid_and_values(mrc):
     values = mrc.data.transpose(2, 1, 0).copy()
     return (xvals, yvals, zvals), values
 
-# Helper to save output MRC
+# Helper to save output MLPD_cela_3.mrcRC
 def save_mrc(filepath, data, common_grid, voxel_spacing=5.0):
     with mrcfile.new(filepath, overwrite=True) as mrc_out:
         mrc_out.set_data(data.transpose(2, 1, 0).astype(np.float32))
