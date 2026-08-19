@@ -5,8 +5,8 @@ import argparse
 from mrc_parser import calculate_with_external_grid_with_addition
 
 # Paths
-SEG_DIR = '/path/to/segmented_maps/segmented_normalized'
-LPD_DIR = '/path/to/cluster.0'
+SEG_DIR = '/home/ragothaman/Documents/Nisha/cellulosome/cellulosome_integrative_modeling/preprocessing/cryo_em/segmented_normalized'
+LPD_DIR = '/home/ragothaman/Documents/Nisha/cellulosome/cellulosome_integrative_modeling/modelling_without_signal_peptide/analysis/model_1_domains_linkers/sampcon_output/cluster.0'
 parser = argparse.ArgumentParser(description="Whole Complex EM Validation")
 parser.add_argument("--output_dir", type=str, required=True, help="Path to save validation results.")
 args = parser.parse_args()
@@ -35,7 +35,7 @@ def get_grid_and_values(mrc):
     values = mrc.data.transpose(2, 1, 0).copy()
     return (xvals, yvals, zvals), values
 
-# Helper to save output MLPD_cela_3.mrcRC
+# Helper to save output
 def save_mrc(filepath, data, common_grid, voxel_spacing=5.0):
     with mrcfile.new(filepath, overwrite=True) as mrc_out:
         mrc_out.set_data(data.transpose(2, 1, 0).astype(np.float32))
@@ -64,22 +64,22 @@ for fname in lpd_filenames:
 print(f'Loaded reference map and {len(lpd_filenames)} LPD components.')
 
 # Whole Complex Comparison
-results_path = os.path.join(save_path, 'em_validation_results_whole_complex.txt')
+results_path = os.path.join(save_path, 'EM_validation.txt')
 with open(results_path, 'w') as f:
     def write_and_print(text):
         print(text)
         f.write(text + '\n')
 
-    write_and_print('# Whole Complex Comparison (Cela 0-8 + Cipa 0)')
+    write_and_print('# EM validation')
     
     # This function interpolates all maps onto a common grid and sums the LPDs 
     # to compare against the first map in the list (the full reference).
     all_pts, nonzero_pts, summed_map, common_grid = calculate_with_external_grid_with_addition(
-        list_of_g, list_of_v, 'Whole Complex', voxel_spacing=5.0)
+        list_of_g, list_of_v, 'Whole EM Complex', voxel_spacing=5.0)
 
     write_and_print(f'all points -> Overlap: {all_pts[0]:.4f}, C0: {all_pts[1]:.4f}, Cam: {all_pts[2]:.4f}, Pearson: {all_pts[3][0]:.4f}, Spearman: {all_pts[3][1]:.4f}')
     write_and_print(f'non-zero points -> Overlap: {nonzero_pts[0]:.4f}, C0: {nonzero_pts[1]:.4f}, Cam: {nonzero_pts[2]:.4f}, Pearson: {nonzero_pts[3][0]:.4f}, Spearman: {nonzero_pts[3][1]:.4f}')
     
-    save_mrc(f'{save_path}/whole_complex_lpd_combined.mrc', summed_map, common_grid)
+    save_mrc(f'{save_path}/lpd_combined.mrc', summed_map, common_grid)
 
 print(f'Done! Results saved to {save_path}')
