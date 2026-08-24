@@ -61,7 +61,7 @@ For each of the simulations, the following files are in the [results](results/) 
 
 ## Addtional information
 
-**Author(s):** Nisha Nandhini Shankar, Omkar Golatkar, Shruthi Viswanath, U. Venkatasubramanian1, Ragothaman M. Yennamalli\
+**Author(s):** Nisha Nandhini Shankar, Omkar Golatkar, Shruthi Viswanath, U. Venkatasubramanian, Ragothaman M. Yennamalli\
 **Date:**  21st August 2026\
 **License**: [GPLv3](LICENSE.txt)\
 **Publications:** Integrative structural modeling reveals the global architecture and conformational heterogeneity of _Acetivibrio thermocellus_ cellulosome
